@@ -1,0 +1,45 @@
+
+body {
+    background-color: antiquewhite;
+}
+
+
+#main-grid {
+    border-radius: 10px;
+    outline: 10px solid black;
+    display: grid;
+    margin-top: 50px;
+    grid-template-columns: repeat(4, 5vw);
+    grid-template-rows: repeat(4, 5vw);
+    gap: 2.5vw;
+    align-self: center;
+    background: linear-gradient(60deg, rgb(179, 245, 255), rgb(238, 253, 255));
+    padding: 2.5vw;
+    margin-left: auto;
+    margin-right: auto;
+    width: 28vw;
+}
+
+.node {
+    border-radius: 10px;
+    padding: auto;
+    border-style: solid;
+    text-align: center;
+    align-content: center;
+    animation-duration: 3s;
+    animation-name: slide-in;
+    animation-iteration-count: 3;
+    animation-direction: alternate;
+}
+
+.node_empty {
+    background: linear-gradient(60deg, rgb(197, 197, 197), rgb(131, 131, 131));
+    border-style: solid;
+    border-radius: 10px;
+    border-color: rgb(240, 249, 255);
+    padding: auto;
+}
+ 
+.boxed-text {
+    font-size: 2vw;
+}
