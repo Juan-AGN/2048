@@ -7,10 +7,14 @@ body {
     font-size: 2vh;
 }
 
+.titleholder {
+    text-align: center;
+}
+
 #scores {
     background: linear-gradient(60deg, rgb(179, 245, 255), rgb(238, 253, 255));
     width: 28vw;
-    margin-top: 50px;
+    margin-top: 20px;
     border-radius: 10px;
     text-align: center;
     align-content: center;
