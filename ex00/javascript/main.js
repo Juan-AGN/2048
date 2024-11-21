@@ -4,11 +4,15 @@ let grid = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
 ];
-  
+
+let win = 0;
+
 const timing = {
-    duration: 250,
+    duration: 258,
     iterations: 1,
 };
+
+let score = 0;
 
 let size = 4;
 
@@ -16,14 +20,21 @@ let size2 = 4;
 
 let onuse = 1;
 
+let scorediv;
+
 console.log(grid);
 
 function get_random_int(max) {
     return Math.floor(Math.random() * (max + 1));
 }
 
+function load_score() {
+    scorediv = document.getElementById('scores');
+    
+    scorediv.innerHTML = `<p class="scorep">SCORE: ${score}</p>`;
+}
+
 function start() {
-    let nums = 0;
     let num1 = get_random_int(4);
     let num2;
 
@@ -47,6 +58,7 @@ function start() {
         }
     }
     fillgrid();
+    load_score()
     onuse = 0;
     console.log(grid);
 }
@@ -74,7 +86,7 @@ function anim_move_left(i, j, i2, j2) {
     let tomove = document.getElementById("box" + i + "-" + j);
   
     tomove.animate([
-      { transform: `translate(${(j2 - j) * 7}vw, ${i2 - i}vw)` },
+      { transform: `translate(${(j2 - j) * (document.getElementById('main-grid').offsetWidth / 4)}px, ${i2 - i}px)` },
     ], timing);
 }
 
@@ -83,16 +95,16 @@ function anim_move_right(i, j, i2, j2) {
     let tomove = document.getElementById("box" + i + "-" + j);
   
     tomove.animate([
-      { transform: `translate(${(j2 + j) * 7}vw, ${i2 - i}vw)` },
+      { transform: `translate(${(j2 - j) * (document.getElementById('main-grid').offsetWidth / 4)}px, ${i2 - i}px)` },
     ], timing);
 }
 
 function anim_move_up(i, j, i2, j2) {
-    console.log("Element found:", "box" + i + "-" + j);
+    console.log(document.getElementById('main-grid').offsetWidth / 100);
     let tomove = document.getElementById("box" + i + "-" + j);
   
     tomove.animate([
-      { transform: `translate(${j2 - j}vw, ${(i2 - i) * 7}vw)` },
+      { transform: `translate(${j2 - j}px, ${(i2 - i) * (document.getElementById('main-grid').offsetHeight / 4)}px)` },
     ], timing);
 }
 
@@ -101,7 +113,7 @@ function anim_move_down(i, j, i2, j2) {
     let tomove = document.getElementById("box" + i + "-" + j);
   
     tomove.animate([
-      { transform: `translate(${j2 - j}vw, ${(i2 - i) * 7}vw)` },
+      { transform: `translate(${j2 - j}px, ${(i2 - i) * document.getElementById('main-grid').offsetHeight / 4}px)` },
     ], timing);
 }
 
@@ -141,7 +153,10 @@ function move_left (i, j) {
     else if (grid[i][j - 1] != grid[i][j] && grid[i][j - 1] != 0)
         return 0;
     else if (grid[i][j - 1] == grid[i][j])
+    {
         grid[i][j - 1] += grid[i][j];
+        score += grid[i][j - 1];
+    }
     else
         grid[i][j - 1] = grid[i][j];
     console.log("change " + grid[i][j]);
@@ -178,10 +193,13 @@ function move_up (i, j) {
     else if (grid[i - 1][j] != grid[i][j] && grid[i - 1][j] != 0)
         return 0;
     else if (grid[i - 1][j] == grid[i][j])
+    {
         grid[i - 1][j] += grid[i][j];
+        score += grid[i - 1][j];
+    }
     else
         grid[i - 1][j] = grid[i][j];
-        console.log("change " + grid[i][j]);
+    console.log("change " + grid[i][j]);
     grid[i][j] = 0;
     console.log("changed " + grid[i][j]);
     return 1;
@@ -216,7 +234,10 @@ function move_down (i, j) {
     else if (grid[i + 1][j] != grid[i][j] && grid[i + 1][j] != 0)
         return 0;
     else if (grid[i + 1][j] == grid[i][j])
+    {
         grid[i + 1][j] += grid[i][j];
+        score += grid[i + 1][j];
+    }
     else
         grid[i + 1][j] = grid[i][j];
     console.log("change " + grid[i][j]);
@@ -243,7 +264,7 @@ function right() {
             }
             console.log(max);
             if (detecter == 1)
-                anim_move_left(i, max, i, j);
+                anim_move_right(i, max, i, j);
         }
         max = size2 - 1;
     }
@@ -254,7 +275,10 @@ function move_right (i, j) {
     else if (grid[i][j + 1] != grid[i][j] && grid[i][j + 1] != 0)
         return 0;
     else if (grid[i][j + 1] == grid[i][j])
+    {
         grid[i][j + 1] += grid[i][j];
+        score += grid[i][j + 1];
+    }
     else
         grid[i][j + 1] = grid[i][j];
     console.log("change " + grid[i][j]);
@@ -285,6 +309,68 @@ function check_numbers_grid(num) {
     return num;
 }
 
+
+function check_winner() {
+    for (let i = 0; i < size; i ++) {
+        for (let j = 0; j < size2; j ++) {
+            if (grid[i][j] >= 2048) {
+                if (win != 1)
+                {
+                    win = 1;
+                    if (window.confirm("You've won! Congratulations!, you now have two options, restart or keep playing to get the highest score possible.\n press ok to restart or close to continue.")) {
+                        restart();
+                    } else {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+function check_loser() {
+    let checker = 0;
+    
+    for (let i = 0; i < size; i ++) {
+        for (let j = 0; j < size2; j ++) {
+            checker += strike_checker(i, j);
+        }
+    }
+    if (checker >= size * size2) {
+        if (win != -1)
+            setTimeout(loser_message, 235);
+        win = -1;
+    }
+}
+function loser_message() {
+    window.alert("You lost, there are no posible moves, better luck next time!\nYou got " + score + " score.");
+}
+
+function strike_checker(i, j) {
+    let strikes = 0;
+
+    if (grid[i][j] == 0)
+        return 0;
+    if (i != size - 1) {
+        if (grid[i][j] != grid[i + 1][j]) {
+            strikes ++;
+        }
+    } else {
+        strikes ++;
+    }
+    if (j != size2 - 1) {
+        if (grid[i][j] != grid[i][j + 1]) {
+            strikes ++;
+        }
+    } else {
+        strikes ++;
+    }
+    if (strikes == 2)
+        return 1;
+    else
+        return 0;
+}
+
 function check_press(event) {
     console.log(event);
     if (onuse == 1)
@@ -300,12 +386,58 @@ function check_press(event) {
         right();
     if (event.key == 'd' || event.key == 's' || event.key =='a' || event.key == 'w')
         addrandom(count_numbers_grid());
+    load_score();
+    setTimeout(refresh, 235);
+ }
+
+ function check_press_left() {
+    if (onuse == 1)
+        return (0);
+    onuse = 1;
+    console.log("hola");
+    left();
+    addrandom(count_numbers_grid());
+    load_score();
+    setTimeout(refresh, 235);
+ }
+
+ function check_press_up() {
+    if (onuse == 1)
+        return (0);
+    onuse = 1;
+    up();
+    addrandom(count_numbers_grid());
+    load_score();
+    setTimeout(refresh, 235);
+ }
+
+ function check_press_down() {
+    if (onuse == 1)
+        return (0);
+    onuse = 1;
+    down();
+    addrandom(count_numbers_grid());
+    load_score();
+    setTimeout(refresh, 235);
+ }
+
+ function check_press_right() {
+    if (onuse == 1)
+        return (0);
+    onuse = 1;
+    right();
+    addrandom(count_numbers_grid());
+    load_score();
     setTimeout(refresh, 235);
  }
 
 function refresh() {
     fillgrid();
     onuse = 0;
+    if (win == -1)
+        restart();
+    check_winner();
+    check_loser();
 }
 
 function addrandom (adds) {
@@ -332,6 +464,8 @@ function addrandom (adds) {
 function restart() {
     if (onuse == 1)
         return ;
+    score = 0;
+    win = 0;
     onuse = 1;
     grid = [
         [0, 0, 0, 0],
@@ -339,5 +473,6 @@ function restart() {
         [0, 0, 0, 0],
         [0, 0, 0, 0],
     ];
+    load_score();
     start();
  }

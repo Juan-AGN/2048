@@ -3,12 +3,116 @@ body {
     background-color: antiquewhite;
 }
 
+.scorep {
+    font-size: 2vh;
+}
+
+#scores {
+    background: linear-gradient(60deg, rgb(179, 245, 255), rgb(238, 253, 255));
+    width: 28vw;
+    margin-top: 50px;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+    outline: 0.5vw solid black;
+}
+
+.basic-box {
+    background: linear-gradient(60deg, rgb(179, 245, 255), rgb(238, 253, 255));
+    width: 28vw;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+    outline: 0.5vw solid black;
+    margin-top: 40px;
+}
+
+.keybox {
+    text-align: center;
+    background: linear-gradient(60deg, rgb(179, 245, 255), rgb(238, 253, 255));
+    padding: auto;
+    width: auto;
+    outline: 1px solid black;
+} 
+
+.controls-box {
+    border-radius: 10px;
+    outline: 0.5vw solid black;
+    display: grid;
+    margin-top: 40px;
+    grid-template-columns: repeat(4, 8.25vw);
+    align-self: center;
+    background: linear-gradient(60deg, rgb(179, 245, 255), rgb(238, 253, 255));
+    margin-left: auto;
+    margin-right: auto;
+    width: 33vw;
+    height: auto;
+}
+
+#left {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#right {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+@media (min-width: 1200px){
+    .controls-box {
+        grid-template-columns: repeat(1, 10vw);
+        grid-template-rows: repeat(4, 8.25vw);
+        position: fixed;
+        width: auto;
+        height: 33vw;
+        left: 80vw;
+        top: 10vh;
+    }
+
+    #up {
+        border-radius: 0;
+        grid-column: 1; 
+        grid-row: 1;
+    }
+
+    #left {
+        border-radius: 0;
+        grid-column: 1; 
+        grid-row: 2;
+    }
+
+    #down {
+        border-radius: 0;
+        grid-column: 1; 
+        grid-row: 4;
+    }
+    
+    #right {
+        border-radius: 0;
+        grid-column: 1; 
+        grid-row: 3;
+    }
+
+}
+
+
 
 #main-grid {
     border-radius: 10px;
-    outline: 10px solid black;
+    outline: 0.5vw solid black;
     display: grid;
-    margin-top: 50px;
+    margin-top: 40px;
     grid-template-columns: repeat(4, 5vw);
     grid-template-rows: repeat(4, 5vw);
     gap: 2.5vw;
@@ -20,16 +124,32 @@ body {
     width: 28vw;
 }
 
+.keybox:hover {
+    background: linear-gradient(60deg, rgb(238, 253, 255), rgb(179, 245, 255));
+    animation-name: hovering;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.basic-box:hover {
+    background: linear-gradient(60deg, rgb(238, 253, 255), rgb(179, 245, 255));
+    animation-name: hovering;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes hovering {
+    0% {background: rgb(238, 253, 255);}
+    50% {background: rgb(126, 238, 255);}
+    100% {background: rgb(238, 253, 255);}
+}
+
 .node {
     border-radius: 10px;
     padding: auto;
     border-style: solid;
     text-align: center;
     align-content: center;
-    animation-duration: 3s;
-    animation-name: slide-in;
-    animation-iteration-count: 3;
-    animation-direction: alternate;
 }
 
 .node_empty {
@@ -42,4 +162,31 @@ body {
  
 .boxed-text {
     font-size: 2vw;
+}
+
+@media (max-width: 1200px){
+    #scores {
+        background: linear-gradient(60deg, rgb(179, 245, 255), rgb(238, 253, 255));
+        width: 80vw;
+    }
+
+    .boxed-text {
+        font-size: 2vh;
+    }
+
+    .controls-box {
+        width: 85vw;
+        grid-template-columns: repeat(4, 21.23vw);
+    }
+    
+    .basic-box {
+        width: 80vw;
+    }
+    #main-grid {
+        grid-template-columns: repeat(4, 18vw);
+        grid-template-rows: repeat(4, 10vh);
+        gap: 2.5vw;
+        width: 80vw;
+        height: auto;
+    }
 }

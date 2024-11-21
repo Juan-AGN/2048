@@ -8,11 +8,29 @@
     <script src="javascript/main.js"></script>
 </head>
 <body onkeypress="check_press(event)">
-    <div id="main-grid" onload="start()"">
+    <div id="scores">
+    </div>
+    <div id="main-grid" onload="start()">
+    </div>
+    <div class="controls-box">
+        <div id="left" onclick="check_press_left()" class="keybox">
+            <p class="scorep"><</p>
+        </div>
+        <div id="up" onclick="check_press_up()" class="keybox">
+            <p class="scorep">^</p>
+        </div>
+        <div id="down" onclick="check_press_down()" class="keybox">
+            <p class="scorep">\/</p>
+        </div>
+        <div id="right" onclick="check_press_right()" class="keybox">
+            <p class="scorep">></p>
+        </div>
+    </div>
+    <div onclick="restart()" class="basic-box">
+        <p class="scorep">RESTART</p>
     </div>
     <script>
         start();
     </script>
-    <div onclick="restart()" class="restart-buttom">RESTART</div>
 </body>
 </html>
